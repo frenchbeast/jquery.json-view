@@ -5,7 +5,21 @@
 ```js
     $('#myElement').jsonView({
         myItem: 1
-    })
+    });
+```
+
+#### Collapsed all
+```js
+    $('#myElement').jsonView({
+        myItem: 1
+    }, { 'collapse_all': true });
+```
+
+#### Collapsed first level
+```js
+    $('#myElement').jsonView({
+        myItem: 1
+    }, { 'collapse_first': true });
 ```
 
 ### Live example:

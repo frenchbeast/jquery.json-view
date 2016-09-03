@@ -201,24 +201,32 @@
     };
 
     return $.fn.jsonView = function(json, options) {
-        var $this = $(this);
+        var settings = {
+            "nl2br": true,
+            "collapse_all": false,
+            "collapse_first": false
+        };
 
-        options = $.extend({}, {
-            nl2br: true
-        }, options);
+        /* If options exist, lets merge them with our default settings */
+        if ( options ) { $.extend( settings, options ); }
 
-        if (typeof json === 'string') {
-            try {
-                json = JSON.parse(json);
-            } catch (err) {
+        return this.each(function() {
+            var objTarget = this;
+
+            if (typeof json === 'string') {
+                try { json = JSON.parse(json); }
+                catch (err) {}
             }
-        }
 
-        $this.append($('<div />', {
-            class: 'json-view'
-        }).append(formatter(json, options)));
+            $(objTarget).append($('<div />', { "class": 'json-view'}).append(formatter(json, options)));
 
-        return $this;
+            if(settings.collapse_all) {
+                $(objTarget).find("span.collapser").click();
+            }
+            else if(settings.collapse_first){
+                $(objTarget).find("ul > li > span.collapser").click();
+            }
+        });
     };
 
 })(jQuery);
